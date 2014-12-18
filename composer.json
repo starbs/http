@@ -1,0 +1,26 @@
+{
+    "name": "starbs/http",
+    "description": "Starbs Http Component",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Graham Campbell",
+            "email": "graham@mineuk.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "symfony/http-foundation": "~2.5",
+        "alexbilbie/proton": "~1.0.5@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Starbs\\Http\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
