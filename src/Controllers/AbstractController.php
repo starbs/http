@@ -14,7 +14,7 @@
 
 namespace Starbs\Http\Controllers;
 
-use Orno\Di\Container;
+use Orno\Di\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,7 @@ abstract class AbstractController
     /**
      * The container instance.
      *
-     * @var \Orno\Di\Container
+     * @var \Orno\Di\ContainerInterface
      */
     protected $container;
 
@@ -51,11 +51,11 @@ abstract class AbstractController
     /**
      * Create a new http controller instance.
      *
-     * @param \Orno\Di\Container $container
+     * @param \Orno\Di\ContainerInterface $container
      *
      * @return void
      */
-    public function __construct(Container $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
