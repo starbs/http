@@ -10,8 +10,8 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "symfony/http-foundation": "~2.5",
-        "alexbilbie/proton": "~1.0.5@dev"
+        "orno/di": "~2.1",
+        "symfony/http-foundation": "~2.5"
     },
     "autoload": {
         "psr-4": {

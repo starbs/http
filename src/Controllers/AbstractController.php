@@ -14,22 +14,61 @@
 
 namespace Starbs\Http\Controllers;
 
-use Proton\Application;
+use Orno\Di\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController
 {
-    protected $app;
+    /**
+     * The container instance.
+     *
+     * @var \Orno\Di\ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * The request instance.
+     *
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
     protected $request;
+
+    /**
+     * The response instance.
+     *
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
     protected $response;
+
+    /**
+     * The arguments.
+     *
+     * @var string[]
+     */
     protected $args;
 
-    public function __construct(Application $app)
+    /**
+     * Create a new http controller instance.
+     *
+     * @param \Orno\Di\ContainerInterface $container
+     *
+     * @return void
+     */
+    public function __construct(ContainerInterface $container)
     {
-        $this->app = $app;
+        $this->container = $container;
     }
 
+    /**
+     * Setup the controller, then run the fire method.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request  $request
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param string[]                                   $args
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function index(Request $request, Response $response, array $args)
     {
         $this->request = $request;
@@ -39,9 +78,22 @@ abstract class AbstractController
         return $this->fire();
     }
 
+    /**
+     * Do some clever things, then return a response.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     protected abstract function fire();
 
-    protected function success($data, $code = 200)
+    /**
+     * Get a success response json.
+     *
+     * @param string[] $data
+     * @param int      $code
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function success(array $data, $code = 200)
     {
         $this->response->setStatusCode($code);
         $this->response->headers->add(['Content-Type' => 'application/json']);
@@ -50,6 +102,14 @@ abstract class AbstractController
         return $this->response;
     }
 
+    /**
+     * Get a redirection response
+     *
+     * @param string $url
+     * @param int    $code
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     protected function redirect($url, $code = 302)
     {
         $this->response->setStatusCode($code);
@@ -58,7 +118,15 @@ abstract class AbstractController
         return $this->response;
     }
 
-    protected function error($data, $code = 500)
+    /**
+     * Get an error response json.
+     *
+     * @param string[] $data
+     * @param int      $code
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function error(array $data, $code = 500)
     {
         $this->response->setStatusCode($code);
         $this->response->headers->add(['Content-Type' => 'application/json']);
@@ -67,6 +135,15 @@ abstract class AbstractController
         return $this->response;
     }
 
+    /**
+     * Get a custom response.
+     *
+     * @param string $data
+     * @param string $mime
+     * @param int    $code
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     protected function raw($data, $mime, $code = 200)
     {
         $this->response->setStatusCode($code);
@@ -76,11 +153,25 @@ abstract class AbstractController
         return $this->response;
     }
 
+    /**
+     * Get an item from the user input.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
     protected function input($key)
     {
         return $this->request->request->get($key);
     }
 
+    /**
+     * Get a file from the user input.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
     protected function file($key)
     {
         return $this->request->files->get($key);
