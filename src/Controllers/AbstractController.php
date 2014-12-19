@@ -83,7 +83,7 @@ abstract class AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected abstract function fire();
+    abstract protected function fire();
 
     /**
      * Get a success response json.
