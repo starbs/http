@@ -103,7 +103,7 @@ abstract class AbstractController
     }
 
     /**
-     * Get a redirection response
+     * Get a redirection response.
      *
      * @param string $url
      * @param int    $code
